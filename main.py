@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 @app.on_event("startup")
-@repeat_every(seconds=(60*5),wait_first=True)
+@repeat_every(seconds=(60),wait_first=True)
 async def search():
     await youtube_search()
 

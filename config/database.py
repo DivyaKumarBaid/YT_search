@@ -10,5 +10,5 @@ client = MongoClient(os.getenv('MONGOURL'))
 
 database = client.youtube
 
-user_col = database.videos
+data_col = database.videos
 # openssl rand -hex 32 to randomly generate JWT SECRET
