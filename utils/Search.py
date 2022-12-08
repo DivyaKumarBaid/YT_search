@@ -7,8 +7,8 @@ load_dotenv()
 
 def youtube_search():
     # since last requested we need not request same videos
-    last_request_time = datetime.now() - timedelta(seconds=60)
-    print(f"\n{last_request_time.isoformat() + 'Z'}\n")
+    last_request_time = datetime.now() - timedelta(minutes=5)
+    print(f"\n{last_request_time.isoformat()[:-7] + 'Z'}\n")
 
     # loading api key
     api_key = os.getenv('API_KEY')
@@ -25,7 +25,7 @@ def youtube_search():
             maxResults=1,
             eventType="completed",
             type="video",
-            publishedAfter=(last_request_time.isoformat() + 'Z')
+            publishedAfter=(last_request_time.isoformat()[:-7] + 'Z')
         )
 
         api_req = api_req.execute()
