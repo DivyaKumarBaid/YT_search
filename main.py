@@ -2,8 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 from utils.Search import youtube_search
-
-# from routes.users import Users
+from routes.videos import videos
 
 app = FastAPI()
 
@@ -22,4 +21,4 @@ app.add_middleware(
 async def search():
     await youtube_search()
 
-# app.include_router(Code.router)
+app.include_router(videos.router)

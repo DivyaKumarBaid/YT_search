@@ -24,28 +24,28 @@ def youtube_search():
             q="java", 
             part="snippet",
             order="date", 
-            maxResults=1,
+            type = "video",
+            maxResults=50,
             eventType="completed",
-            type="video",
-            publishedAfter=(last_request_time.isoformat()[:-7] + 'Z')
+            publishedAfter=(last_request_time.isoformat()[:-7] + 'Z'),
         )
 
         api_req = api_req.execute()
 
-        print(api_req["items"][0]["snippet"])
         # Video title, description, publishing datetime, thumbnails 
-        save_data = FetchData(
-            title = api_req["items"][0]["snippet"]["title"],
-            description = api_req["items"][0]["snippet"]["description"],
-            publishedAt = api_req["items"][0]["snippet"]["publishedAt"],
-            thumbnail = api_req["items"][0]["snippet"]["thumbnails"]["default"]["url"],
-            channelTitle = api_req["items"][0]["snippet"]["channelTitle"],
-        )
+        for req in api_req["items"]:
+            save_data = FetchData(
+                title = req["snippet"]["title"],
+                description = req["snippet"]["description"],
+                publishedAt = req["snippet"]["publishedAt"],
+                thumbnail = req["snippet"]["thumbnails"]["default"]["url"],
+                channelTitle = req["snippet"]["channelTitle"],
+            )
 
-        cursor = data_col.insert_one(dict(save_data))
+            cursor = data_col.insert_one(dict(save_data))
 
-        if not cursor:
-            raise Exception("Something went wrong")
+            if not cursor:
+                raise Exception("Something went wrong")
 
     except Exception as e:
         print(e)
