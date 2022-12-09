@@ -21,6 +21,12 @@ font-family: 'Noto Sans', sans-serif;
 .darkTheme{
   color:white;
 }
+.textfield__label__{
+  color: black;
+}
+.textfield__label__darkTheme{
+  color: white !important;
+}
 .Loader{
   width: 100%;
   height: 100%;
@@ -53,12 +59,13 @@ font-family: 'Noto Sans', sans-serif;
   font-family: 'Montserrat', sans-serif;
 }
 .submitBtn{
+  border-radius: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px;
   background-color: var(--base);
-  font-size: 1.2em;
+  font-size: 1em;
   color: white;
   height: min-content;
   font-family: 'Montserrat', sans-serif;
@@ -67,9 +74,8 @@ font-family: 'Noto Sans', sans-serif;
 }
 .imageDiv{
   background-position: center;
-  background-size: cover;
-  border: var(--base) 2px solid;
-  box-shadow: 2px 2px 12px rgb(35,35,35,0.8);
+  background-size: contain;
+  box-shadow: 2px 2px 12px rgb(35,35,35,0.5);
   width:70vh;
   height: 60vh;
   transform:rotate(10deg);
@@ -113,7 +119,7 @@ font-family: 'Noto Sans', sans-serif;
 /* navbar */
 .navBar{
   width:100vw;
-  height: 7vh;
+  height: 8vh;
   display: flex;
   justify-content:space-between;
   align-items: center;
@@ -153,6 +159,11 @@ font-family: 'Noto Sans', sans-serif;
   justify-content: center;
   background-color: ghostwhite;
   box-shadow: 2px 2px 3px rgb(36, 36, 36,0.2);
+}
+.pageBox.darkTheme{
+  background-color: var(--darkCard);
+  box-shadow: 2px 2px 3px rgb(36, 36, 36);
+  color: white;
 }
 .next,.prev{
   cursor: pointer;

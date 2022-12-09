@@ -2,8 +2,7 @@ import React from 'react';
 import Card from './components/Card/Card'
 import './App.css'
 import Filter from './components/filter/Filter';
-import { BsHouseFill } from 'react-icons/bs'
-import { GiTreehouse } from 'react-icons/gi'
+import { BsYoutube,BsSortUpAlt } from 'react-icons/bs'
 import { WiDaySunny } from 'react-icons/wi'
 import { MdNightlight } from 'react-icons/md'
 import TextFilter from './components/filter/TextFilter';
@@ -54,15 +53,15 @@ export default function App() {
   };
 
   const handleSearch = () => {
-    let url = `http://127.0.0.1:8000/videos/?page=${page}&sort=${sortingType === "Ascending" ? true : false}`
+    let url = process.env.REACT_APP_BASE_URL+`/videos/?page=${page}&sort=${sortingType === "Ascending" ? true : false}`
     if (channelName !== "") {
-      url = url+`&channelName=${channelName}`
+      url = url + `&channelName=${channelName}`
     }
     if (videoTitle !== "") {
-      url = url+`&videoTitle=${videoTitle}`
+      url = url + `&videoTitle=${videoTitle}`
     }
     if (videoDescription !== "") {
-      url = url+`&description=${videoDescription}`
+      url = url + `&description=${videoDescription}`
     }
     fetchData(url)
   }
@@ -95,82 +94,86 @@ export default function App() {
 
   React.useEffect(() => {
     // data, isPending, Error
-    fetchData(`http://127.0.0.1:8000/videos/?page=${page}&sort=${sortingType === "Ascending" ? true : false}`)
+    fetchData(process.env.REACT_APP_BASE_URL+`/videos/?page=${page}&sort=${sortingType === "Ascending" ? true : false}`)
   }, [page, sortingType])
 
   // const handleLoc = (value) => setLoc(value);
   return (
-      <div className={`container ${theme && "darkTheme"}`}>
-        <div className={`navBar ${theme && "darkTheme"}`}>
-          <div className="company">
-            <GiTreehouse style={{ color: 'var(--base)', fontSize: '1.5em', marginRight: '12px' }} />
-            Youtube-Estate
-          </div>
-          {theme ? <MdNightlight onClick={toggleTheme} style={{ color: "white", fontSize: '25px', marginRight: '30px', cursor: 'pointer', transform: 'rotate(-20deg)' }} /> : <WiDaySunny onClick={toggleTheme} style={{ color: "black", fontSize: '35px', marginRight: '25px', cursor: 'pointer' }} />}
+    <div className={`container ${theme && "darkTheme"}`}>
+      <div className={`navBar ${theme && "darkTheme"}`}>
+        <div className="company">
+          <BsYoutube style={{ color: 'red', fontSize: '1.5em', marginRight: '12px' }} />
+          Youtube-Estate
         </div>
-        <div className="landing">
-          <div className="landingText">
-            Search Youtube<br />without any hussle.
-          </div>
-          <div className={`imageDiv ${theme && 'darkTheme'}`} style={{ backgroundImage: 'url(assets/homeHero.jpg)' }}></div>
+        <div className="navRightWrapper" style={{display:"flex",justifyContent:"center",alignItems:"center",}}>
+        <div className="apiLink" style={{marginRight:'15px'}}>
+          <a href={process.env.REACT_APP_BASE_URL + `/docs`}>
+            <div className="submitBtn">API</div>
+          </a>
         </div>
-
-        <div className={`filter ${theme && "darkTheme"}`}>
-
-          <Filter
-            value={sortingType}
-            handleChange={handleSorting}
-            list={sorting}
-            place={"Sorting(Time)"}
-            symbol={<BsHouseFill style={{ color: 'var(--base)', marginRight: '5px' }} />}
-            theme={theme}
-          />
-
-          <div style={{ width: '1px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
-          <TextFilter
-            value={channelName}
-            handleChange={handleChannelName}
-            place={"Channel Name"}
-            symbol={<BsHouseFill style={{ color: 'var(--base)', marginRight: '5px' }} />}
-            theme={theme}
-          />
-          <div style={{ width: '1px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
-          <TextFilter
-            value={videoTitle}
-            handleChange={handlevideoTitle}
-            place={"Video Title"}
-            symbol={<BsHouseFill style={{ color: 'var(--base)', marginRight: '5px' }} />}
-            theme={theme}
-          />
-
-          <div style={{ width: '0.5px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
-          <TextFilter
-            value={videoDescription}
-            handleChange={handlevideoDescription}
-            place={"Description"}
-            symbol={<BsHouseFill style={{ color: 'var(--base)', marginRight: '5px' }} />}
-            theme={theme}
-          />
-          <div style={{ width: '0.5px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} onClick={() => {handleSearch()}}><div className="submitBtn">Search</div></div>
-        </div>
-        {    isPending ? <div>Loading...</div>
-      :data && <div className={`searchResult ${theme && "darkTheme"}`}>
-          {data.map((data => <Card obj={data} theme={theme} />))}
-        </div>}
-        <div className="pagination">
-          <div className={`pageSelector ${theme && "darkTheme"}`}>
-            {page > 1 && <div className={`prev pageBox ${theme && "darkTheme"}`} onClick={() => { changePage(-1) }}>
-              -
-            </div>}
-            <div className={`pageDisplay pageBox ${theme && "darkTheme"}`}>
-              {page}
-            </div>
-            {data && data.length > 0 && <div className={`next pageBox ${theme && "darkTheme"}`} onClick={() => { changePage(1) }}>
-              +
-            </div>}
-          </div>
+          {theme ? <MdNightlight onClick={toggleTheme} style={{ color: "white", fontSize: '20px', marginRight: '35px',marginLeft:'5px', cursor: 'pointer', transform: 'rotate(-20deg)' }} /> : <WiDaySunny onClick={toggleTheme} style={{ color: "black", fontSize: '35px', marginRight: '25px', cursor: 'pointer' }} />}
         </div>
       </div>
+      <div className="landing">
+        <div className="landingText">
+          Search Youtube<br />without any hussle.
+        </div>
+        <div className={`imageDiv ${theme && 'darkTheme'}`} style={{ backgroundImage: 'url(assets/homeHero.png)' }}></div>
+      </div>
+
+      <div className={`filter ${theme && "darkTheme"}`}>
+
+        <Filter
+          value={sortingType}
+          handleChange={handleSorting}
+          list={sorting}
+          place={"Sorting(Time)"}
+          symbol={<BsSortUpAlt style={{ color: 'var(--base)', marginRight: '5px' }} />}
+          theme={theme}
+        />
+
+        <div style={{ width: '1px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
+        <TextFilter
+          value={channelName}
+          handleChange={handleChannelName}
+          place={"Channel Name"}
+          theme={theme}
+        />
+        <div style={{ width: '1px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
+        <TextFilter
+          value={videoTitle}
+          handleChange={handlevideoTitle}
+          place={"Video Title"}
+          theme={theme}
+        />
+
+        <div style={{ width: '0.5px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
+        <TextFilter
+          value={videoDescription}
+          handleChange={handlevideoDescription}
+          place={"Description"}
+          theme={theme}
+        />
+        <div style={{ width: '0.5px', height: '8vh', background: 'rgb(35,35,35,0.2)' }}></div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }} onClick={() => { handleSearch() }}><div className="submitBtn">Search</div></div>
+      </div>
+      {isPending ? <div className={`Loader ${theme && "darkTheme"}`}>Loading...</div>
+        : data && <div className={`searchResult ${theme && "darkTheme"}`}>
+          {data.map((data => <Card obj={data} theme={theme} />))}
+        </div>}
+      <div className="pagination">
+        <div className={`pageSelector ${theme && "darkTheme"}`}>
+          {page > 1 && <div className={`prev pageBox ${theme && "darkTheme"}`} onClick={() => { changePage(-1) }}>
+            -
+          </div>}
+          <div className={`pageDisplay pageBox ${theme && "darkTheme"}`}>
+            {page}
+          </div>
+          {data && data.length > 0 && <div className={`next pageBox ${theme && "darkTheme"}`} onClick={() => { changePage(1) }}>
+            +
+          </div>}
+        </div>
+      </div>
+    </div>
   )
 }

@@ -10,11 +10,13 @@ export default function Filter(prop) {
       <FormControl variant="standard" sx={{ minWidth: 150 }}>
         <InputLabel id="filterlables" className={`filterlables ${theme}`}>{prop.symbol}{prop.place}</InputLabel>
         <Select
+          style={{color:prop.theme?"white":"black"}}
           labelId="filterlables"
           id="loc"
-          className='loc'
+          className={`loc`}
           value={prop.value}
           label="filterlables"
+          InputLabelProps={{className:`textfield__label__${theme}`}}
           onChange={(e) => prop.handleChange(e.target.value)}
         >
           {
