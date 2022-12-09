@@ -8,3 +8,4 @@ class FetchData(BaseModel):
     publishedAt: str = Field(...)
     thumbnail: str = Field(...)
     channelTitle: str = Field(...)
+    channelId: str = Field(...)
