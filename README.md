@@ -1,6 +1,10 @@
 # YT_search
 FastAPI (Python) is used to build the server. The server automatically calls the youtube api after every 5 mins and this can be change in main.py and Search.py
 The server also supports multiple API keys as it switches between keys on error by the googleAPI
+
+Example of the live server : https://xw8csg.deta.dev/docs#/
+Live Webpage : https://yt-search-ny4nf7tis-divyakumarbaid.vercel.app/
+
 Use
 ```git clone <url>```
 To clone the repository locally.
