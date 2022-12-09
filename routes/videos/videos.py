@@ -24,7 +24,6 @@ def home(page: int = 1,sort:bool = True, channelName: Optional[str] = None, vide
         # for path parameteres
         
         videos = []
-        print(filter_dict)
         cursor = data_col.find(filter_dict).skip((page-1)*10).limit(20).sort("_id",sorting)
         if cursor:
             for res in cursor:

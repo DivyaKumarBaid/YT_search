@@ -28,16 +28,13 @@ no_of_api_keys = int(os.getenv('NO_OF_API'))
 async def load_api():
     # loading all api keys in api_keys array
     for i in range (1,no_of_api_keys+1):
-        print(i)
         api_keys.append(os.getenv(f'API_KEY_{i}'))
-    print("initially->",api_keys)
     # loading first api key
     using_api_key.append(api_keys[0])
-    print("initially",using_api_key)
     # print(api_keys)
 
 @app.on_event("startup")
-@repeat_every(seconds=(60*5),wait_first=False)
+@repeat_every(seconds=(60*5),wait_first=True)
 async def search():
     try:
         res = await youtube_search(using_api_key[len(using_api_key)-1])

@@ -1,5 +1,6 @@
 # YT_search
-FastAPI (Python) is used to build the server.
+FastAPI (Python) is used to build the server. The server automatically calls the youtube api after every 5 mins and this can be change in main.py and Search.py
+The server also supports multiple API keys as it switches between keys on error by the googleAPI
 Use
 ```git clone <url>```
 To clone the repository locally.
@@ -21,6 +22,12 @@ To start the server.
 
 ## Docs
 Go to the port where server is listening and add `/docs` at the end of url to use Swagger Documentation.
+
+## Usage
+The server has a single get request.
+Filters are used as optional path parameters.
+Filters are : page, channel name, video title, video description. 
+For more clarity refer to the swagger docs on local host.
 
 ## Hosting
 Use Deta to host the server.

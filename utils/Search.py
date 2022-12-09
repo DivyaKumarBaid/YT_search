@@ -4,17 +4,12 @@ from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 from schemas import FetchData
 from config.database import data_col
-from dateutil import parser as date_time_parser
-import pytz
-
-utc=pytz.UTC
 
 load_dotenv()
 
 async def youtube_search(api_key):
     # since last requested we need not request same videos
     last_request_time = datetime.now() - timedelta(minutes=5)
-    print(f"\n{last_request_time.isoformat()[:-7] + 'Z'}\n")
 
     # loading query key
     search_param = os.getenv('QUERY')
