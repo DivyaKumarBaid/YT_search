@@ -11,13 +11,13 @@ utc=pytz.UTC
 
 load_dotenv()
 
-def youtube_search():
+async def youtube_search(api_key):
     # since last requested we need not request same videos
-    last_request_time = datetime.now() - timedelta(minutes=1)
+    last_request_time = datetime.now() - timedelta(minutes=5)
     print(f"\n{last_request_time.isoformat()[:-7] + 'Z'}\n")
 
-    # loading api key
-    api_key = os.getenv('API_KEY')
+    # loading query key
+    search_param = os.getenv('QUERY')
 
     # youtube object is build
     youtube = build('youtube','v3',developerKey=api_key)
@@ -25,12 +25,12 @@ def youtube_search():
     try:
 
         api_req = youtube.search().list(
-            q="java", 
+            q=search_param, 
             part="snippet",
-            order="date", 
-            type = "video",
+            order="date",
             maxResults=50,
             eventType="completed",
+            type="video",
             publishedAfter=(last_request_time.replace(microsecond=0).isoformat()+'Z'),
         )
 
@@ -39,7 +39,7 @@ def youtube_search():
 
         api_req = api_req.execute()
 
-        # Video title, description, publishing datetime, thumbnails 
+        # Video title, description, publishing datetime, thumbnails , channel title, channel id
         for req in api_req["items"]:
             
             # if(date_time_parser.parse(req["snippet"]["publishedAt"]).replace(tzinfo=utc) < date_time_parser.parse(str(last_request_time)[:-7]).replace(tzinfo=utc)) :
@@ -49,9 +49,10 @@ def youtube_search():
                 title = req["snippet"]["title"],
                 description = req["snippet"]["description"],
                 publishedAt = req["snippet"]["publishedAt"],
-                thumbnail = req["snippet"]["thumbnails"]["default"]["url"],
+                thumbnail = req["snippet"]["thumbnails"]["high"]["url"],
                 channelTitle = req["snippet"]["channelTitle"],
                 channelId = req["snippet"]["channelId"],
+                videoId = req["id"]["videoId"]
             )
 
             cursor = data_col.insert_one(dict(save_data))
@@ -59,6 +60,9 @@ def youtube_search():
             if not cursor:
                 raise Exception("Something went wrong")
 
+        return False
+
     except Exception as e:
         print(e)
+        return True
 

@@ -9,6 +9,7 @@ router = APIRouter(tags=["videos"], prefix="/videos")
 @router.get('/', status_code=200)
 def home(page: int = 1,sort:bool = True, channelName: Optional[str] = None, videoTitle:Optional[str]=None,description:Optional[str]=None):
     try:
+
         # for path parameteres
         filter_dict = {}
         sorting = -1
@@ -20,10 +21,11 @@ def home(page: int = 1,sort:bool = True, channelName: Optional[str] = None, vide
             filter_dict['title'] = videoTitle
         if description != None:
             filter_dict['description'] = description
+        # for path parameteres
         
         videos = []
         print(filter_dict)
-        cursor = data_col.find(filter_dict).skip((page-1)*10).limit(10).sort("_id",sorting)
+        cursor = data_col.find(filter_dict).skip((page-1)*10).limit(20).sort("_id",sorting)
         if cursor:
             for res in cursor:
                 videos.append(FetchData(**res))

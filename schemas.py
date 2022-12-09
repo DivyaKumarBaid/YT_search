@@ -9,3 +9,4 @@ class FetchData(BaseModel):
     thumbnail: str = Field(...)
     channelTitle: str = Field(...)
     channelId: str = Field(...)
+    videoId: str = Field(...)
