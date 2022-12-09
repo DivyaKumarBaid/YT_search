@@ -1,3 +1,6 @@
+### `npm i`
+To install all the required node modules
+
 ### `npm start`
 To start the development server on local host
 
